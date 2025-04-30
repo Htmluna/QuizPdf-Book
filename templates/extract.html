@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Extrair Texto de PDF</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Extrair Texto de PDF</h1>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <p>Arquivo: {{ filename }}</p>
+        <p>Número de páginas: {{ num_pages }}</p>
+
+        <form method="post">
+            <label for="pages">Páginas para extrair (separadas por vírgula ou intervalo, ex: 1, 3, 5-10):</label><br>
+            <input type="text" id="pages" name="pages"><br><br>
+            <button type="submit">Extrair Texto</button>
+        </form>
+    </div>
+
+    <div class="container">
+        {% if text %}
+            <h2>Texto Extraído:</h2>
+            <pre>{{ text }}</pre>
+        {% endif %}
+
+        {% if questions %}
+            <h2>Perguntas Geradas:</h2>
+            <div class="quiz-container">
+                <form id="quiz-form">
+                    {% for question in questions %}
+                    {% set question_index = loop.index0 %}
+                    <div>
+                        <p>{{ question.question }}</p>
+                        {% for letter, alternative in question.alternatives.items() %}
+                            <label id="label-{{ question_index }}-{{ letter }}">
+                                <input type="radio" name="question_{{ question_index }}" value="{{ letter }}">
+                                {{ letter }}) {{ alternative }}
+                            </label><br>
+                        {% endfor %}
+                        <p class="hidden correct-answer" id="correct-answer-{{ question_index }}" data-correct="{{ question.correct_answer }}">
+                            Resposta Correta: {{ question.correct_answer }}
+                        </p>
+                    </div>
+                {% endfor %}
+
+                    <button type="button" onclick="checkAnswers()">Verificar Respostas</button>
+                </form>
+                <p id="result"></p>
+            </div>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}">Voltar</a>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            let correctAnswers = 0;
+            const form = document.getElementById('quiz-form');
+            const result = document.getElementById('result');
+            const questions = form.querySelectorAll('div');
+
+            questions.forEach((question, index) => {
+                const selectedAnswer = question.querySelector(`input[name="question_${index}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct-answer-${index}`);
+                const correctAnswer = correctAnswerElement.dataset.correct;
+                const labelId = `label-${index}-${correctAnswer}`;
+                const correctLabel = document.getElementById(labelId);
+
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === correctAnswer) {
+                        selectedAnswer.parentNode.classList.add('correct');
+                        correctAnswers++;
+                    } else {
+                        selectedAnswer.parentNode.classList.add('incorrect');
+                        correctLabel.classList.add('correct');
+                    }
+                } else {
+                    correctLabel.classList.add('correct');
+                }
+                correctAnswerElement.classList.remove('hidden');
+            });
+
+            result.textContent = `Você acertou ${correctAnswers} de ${questions.length} perguntas.`;
+        }
+    </script>
+</body>
+</html>

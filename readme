@@ -1,0 +1,91 @@
+# PDF Text Extractor and Question Generator
+
+Este aplicativo web, desenvolvido com Flask, permite aos usuários extrair texto de arquivos PDF e gerar automaticamente perguntas de múltipla escolha com base no conteúdo extraído, utilizando a API Gemini Pro.
+
+## Funcionalidades
+
+* **Upload de PDF:** Faça upload de arquivos PDF diretamente pela interface web.
+* **Extração de Texto:** Extrai texto das páginas específicas definidas pelo usuário.
+* **Geração de Perguntas:** Usa a API Gemini Pro para gerar automaticamente perguntas e alternativas de resposta relevantes.
+* **Interface de Quiz:** Apresenta as perguntas geradas em um formato de quiz interativo.
+
+## Tecnologias Usadas
+
+* Flask
+* pypdf
+* Google Gemini Pro
+* HTML/CSS/JavaScript
+* Werkzeug
+
+## Pré-Requisitos
+
+* Python 3.6+
+* Uma chave da API Google Gemini Pro.
+
+## Instalação
+
+1. Clone o repositório (se aplicável):
+
+    ```bash
+    git clone <repository_url>
+    cd <diretório_do_projeto>
+    ```
+
+2. Crie um ambiente virtual (recomendado):
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # Linux/macOS
+    venv\Scripts\activate     # Windows
+    ```
+
+3. Instale as dependências:
+
+    ```bash
+    pip install Flask pypdf google-generativeai werkzeug
+    ```
+
+4. Configure sua chave da API Gemini Pro no arquivo `app.py`:
+
+    ```python
+    GOOGLE_API_KEY = "YOUR_API_KEY"  # Substitua pela sua chave API real
+    ```
+
+## Executando o Aplicativo
+
+```bash
+python app.py
+```
+
+## Acesse o aplicativo
+
+Acesse o aplicativo no seu navegador em [http://127.0.0.1:5000/](http://127.0.0.1:5000/) (ou o endereço mostrado na saída do terminal).
+
+## Como Usar
+
+1. Faça upload de um arquivo PDF.
+2. Especifique os números das páginas a serem extraídas. Use valores separados por vírgulas e/ou intervalos (por exemplo, 1, 3, 5-8).
+3. Visualize o texto extraído e o quiz gerado.
+4. Responda às perguntas e veja seus resultados.
+
+## Estrutura do Projeto
+
+├── app.py           # Main Flask application file
+├── templates/       # HTML templates
+│   ├── index.html     # Upload page
+│   └── extract.html   # Text extraction and quiz page
+├── static/          # Static files (CSS, JavaScript)
+│   └── style.css      # Stylesheet
+└── uploads/         # Uploaded PDF files (created automatically)
+
+## Contribuindo
+
+Contribuições são bem-vindas! Por favor, envie pull requests com descrições claras sobre as mudanças feitas.
+
+## Melhorias Futuras
+
+* Suporte a mais idiomas.
+* Número personalizável de perguntas a serem geradas.
+* Análise de texto aprimorada para uma melhor geração de perguntas.
+* Interface de usuário aprimorada.
+* Integração com banco de dados para armazenar PDFs e quizzes gerados.

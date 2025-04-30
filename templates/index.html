@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Extrair Texto de PDF</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Extrair Texto de PDF</h1>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="file-upload-wrapper">
+                <div class="file-input-group">
+                    <label for="pdf_file" class="custom-file-upload">Escolher PDF</label>
+                    <span id="file-name">Nenhum arquivo selecionado</span>
+                    <input id="pdf_file" type="file" name="pdf_file" accept=".pdf">
+                </div>
+                <button type="submit">Enviar PDF</button>
+            </div>
+        </form>
+
+
+
+    </div>
+    <script>
+        const fileInput = document.getElementById('pdf_file');
+        const fileNameSpan = document.getElementById('file-name');
+
+        fileInput.addEventListener('change', function() {
+            const fileName = this.files.length > 0 ? this.files[0].name : 'Nenhum arquivo selecionado';
+            fileNameSpan.textContent = fileName;
+        });
+    </script>
+
+</body>
+</html>
