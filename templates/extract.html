@@ -35,7 +35,7 @@
                     {% for question in questions %}
                     {% set question_index = loop.index0 %}
                     <div>
-                        <p>{{ question.question }}</p>
+                        <p><strong>{{ loop.index }}.</strong> {{ question.question }}</p>
                         {% for letter, alternative in question.alternatives.items() %}
                             <label id="label-{{ question_index }}-{{ letter }}">
                                 <input type="radio" name="question_{{ question_index }}" value="{{ letter }}">
@@ -46,7 +46,8 @@
                             Resposta Correta: {{ question.correct_answer }}
                         </p>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+
 
                     <button type="button" onclick="checkAnswers()">Verificar Respostas</button>
                 </form>

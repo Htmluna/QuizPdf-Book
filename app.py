@@ -7,7 +7,7 @@ import google.generativeai as genai
 import re  # Importa a biblioteca re
 
 # Configuração da API do Gemini
-GOOGLE_API_KEY = "API KEY "  # Substitua pela sua chave de API
+GOOGLE_API_KEY = "SUA API"  # Substitua pela sua chave de API
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Seleciona o modelo Gemini Pro para geração de texto
@@ -163,9 +163,6 @@ def extract_text(filename):
                             if 0 <= page_num < num_pages:
                                 page = reader.pages[page_num]
                                 extracted_text += page.extract_text() + "\n\n"
-
-                        max_text_length = 1000 # Limita o texto a 500 caracteres
-                        extracted_text = extracted_text[:max_text_length]
 
                         # Gera as perguntas e alternativas
                         questions = generate_questions_and_alternatives(extracted_text)
